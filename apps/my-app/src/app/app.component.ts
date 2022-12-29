@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+
 import { FormlyFieldConfig } from '@ngx-formly/core';
+
+import { DataService } from './core/data.service';
 
 @Component({
   selector: 'my-app-root',
@@ -10,10 +13,11 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
 export class AppComponent {
   title = 'my-app';
 
-  form = new FormGroup({});
-  model = {
+  form: FormGroup = new FormGroup({});
+  model: any = {
     firstname: 'Mike',
-    age: 34
+    age: 34,
+    nationId: 1
   };
   fields: FormlyFieldConfig[] = [
     {
@@ -27,15 +31,24 @@ export class AppComponent {
       key: 'age',
       type: 'input',
       templateOptions: {
-        label: 'Age'
+        label: 'Age',
+        type: 'number'
+      }
+    },
+    {
+      key: 'nationId',
+      type: 'select',
+      templateOptions: {
+        label: 'Nation',
+        options: this.dataService.getNations()
       }
     }
   ];
 
-  // Ignore TypeScript compiler error for onSubmit variables
-  // @ts-ignore
-  onSubmit({ valid, value }) {
-    console.log(`valid: ${valid}`);
-    console.log(value);
+  constructor(private dataService: DataService) {}
+
+  onSubmit(form: { valid: any; value: any }) {
+    console.log(`form.valid: ${form.valid}`);
+    console.log(`form.value: ${form.value}`);
   }
 }
