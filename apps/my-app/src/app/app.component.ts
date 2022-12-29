@@ -23,14 +23,21 @@ export class AppComponent {
     {
       key: 'firstname',
       type: 'input',
-      templateOptions: {
+      props: {
         label: 'Firstname'
+      },
+      hooks: {
+        onInit: (field: FormlyFieldConfig) => {
+          if (field.props) {
+            field.props.label = 'Firstname changed';
+          }
+        }
       }
     },
     {
       key: 'age',
       type: 'input',
-      templateOptions: {
+      props: {
         label: 'Age',
         type: 'number'
       }
@@ -38,7 +45,7 @@ export class AppComponent {
     {
       key: 'nationId',
       type: 'select',
-      templateOptions: {
+      props: {
         label: 'Nation',
         options: this.dataService.getNations()
       }
