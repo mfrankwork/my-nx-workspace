@@ -15,14 +15,16 @@
         "production": {
           "devServerTarget": "my-app:serve:production"
         }
-      }
+      },
+      "inputs": ["default", "^production"]
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["apps/my-app-e2e/**/*.{js,ts}"]
-      }
+      },
+      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
     }
   },
   "tags": [],

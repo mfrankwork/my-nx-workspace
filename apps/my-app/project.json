@@ -3,7 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "apps/my-app/src",
-  "prefix": "my-nx-workspace",
+  "prefix": "my-app",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
@@ -16,7 +16,7 @@
         "tsConfig": "apps/my-app/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": ["apps/my-app/src/favicon.ico", "apps/my-app/src/assets"],
-        "styles": ["apps/my-app/src/styles.scss"],
+        "styles": ["@angular/material/prebuilt-themes/deeppurple-amber.css", "apps/my-app/src/styles.scss"],
         "scripts": []
       },
       "configurations": {
@@ -44,7 +44,9 @@
           "namedChunks": true
         }
       },
-      "defaultConfiguration": "production"
+      "defaultConfiguration": "production",
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
@@ -69,7 +71,8 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["apps/my-app/**/*.ts", "apps/my-app/**/*.html"]
-      }
+      },
+      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
     },
     "test": {
       "executor": "@nrwl/jest:jest",
@@ -77,7 +80,8 @@
       "options": {
         "jestConfig": "apps/my-app/jest.config.ts",
         "passWithNoTests": true
-      }
+      },
+      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
     }
   },
   "tags": []
